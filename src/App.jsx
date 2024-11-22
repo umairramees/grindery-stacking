@@ -16,6 +16,7 @@ WalletSDK.on('connect', (chainId: string) => {
 
 WalletSDK.on('connect', async () => {
     const [address]: string[] = await WalletSDK.connect();
+    console.log(window);
 });
 
 function App() {
@@ -28,6 +29,11 @@ function App() {
 
     useEffect(() => {
     }, []);
+
+    WalletSDK.on('accountsChanged', (addresses: string[]) => {
+        console.log('accountsChanged', addresses);
+        setAccount(addresses[0]);
+    });
 
     return (
         <div className="App">
