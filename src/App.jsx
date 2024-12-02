@@ -19,6 +19,41 @@ WalletSDK.on('connect', async () => {
     console.log(window);
 });
 
+// Token Details
+const TOKENS = {
+    G1: {
+        name: "Grindery One Token",
+        polygon: "0xe36bd65609c08cd17b53520293523cf4560533d0",
+        opbnb: "0xe36bd65609c08cd17b53520293523cf4560533d0",
+    },
+    GX: {
+        name: "Grindery X Token",
+        polygon: "0x8730762Cad4a27816A467fAc54e3dd1E2e9617A1",
+        ethereum: "0x8730762Cad4a27816A467fAc54e3dd1E2e9617A1",
+    },
+};
+
+// Generic ERC-20 ABI
+const ERC20_ABI = [
+    {
+        constant: true,
+        inputs: [{ name: "_owner", type: "address" }],
+        name: "balanceOf",
+        outputs: [{ name: "balance", type: "uint256" }],
+        type: "function",
+    },
+    {
+        constant: false,
+        inputs: [
+            { name: "_to", type: "address" },
+            { name: "_value", type: "uint256" },
+        ],
+        name: "transfer",
+        outputs: [{ name: "success", type: "bool" }],
+        type: "function",
+    },
+];
+
 function App() {
     const [account, setAccount] = useState(null);
     const [provider, setProvider] = useState(null);
@@ -33,6 +68,7 @@ function App() {
     WalletSDK.on('accountsChanged', (addresses: string[]) => {
         console.log('accountsChanged', addresses);
         setAccount(addresses[0]);
+        // console.log('user', await WalletSDK.getUser());
     });
 
     return (
